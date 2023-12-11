@@ -76,7 +76,7 @@ $pdf->cell(90,10,'School : Daulatpur High School',0,1,'L',0,'',false,'M','M');
 $pdf->setFont('times','',12);
 $pdf->ln(3);
 
-$tbl = <<<'EOD'
+$tbl = <<<EOD
        <table border="1" cellpadding="2" cellspacing="2">
 
        <tr>
@@ -92,16 +92,20 @@ $tbl = <<<'EOD'
        </tr>
 
 
-       </table>
+       
 EOD;
 
-$sql = "SELECT * FROM fee WHERE feeStudentID = 11";
+$sql = "SELECT * FROM fee";
 
 if($result = mysqli_query($con,$sql)){
     $i =0;
 
+    $totalFee = 0;
+ 
+
     while($row = mysqli_fetch_assoc($result)){
 
+       
         if(isset($row['feeFeeAmt'])){
             $fee = $row['feeFeeAmt'];
         }
@@ -116,10 +120,10 @@ if($result = mysqli_query($con,$sql)){
 
         $totalFee += (int)$fee;
 
-        $tbl .= <<<'EOD'
+        $tbl .= <<<EOD
         <tr>
-        <td width="10%"  style="text-align:center,vertical-align:middle; font-weight:bold">$i</td>
-        <td width="20%"  style="text-align:center,vertical-align:middle; font-weight:bold">Particulars</td>
+        <td width="10%"  style="text-align:center,vertical-align:middle; font-weight:bold"> $i </td>
+        <td width="20%"  style="text-align:center,vertical-align:middle; font-weight:bold">Tution Fee</td>
         <td width="20%"  style="text-align:center,vertical-align:middle; font-weight:bold">$newDate</td>
         <td width="20%"  style="text-align:center,vertical-align:middle; font-weight:bold">$feeVoucherNo </td>
         <td width="30%"  style="text-align:center,vertical-align:middle; font-weight:bold">$fee</td>
@@ -130,9 +134,9 @@ if($result = mysqli_query($con,$sql)){
     }
 }
 
-$tbl .= <<<'EOD'
+$tbl .= <<<EOD
 <tr>
-<td style="text-align:right,font-weight:bold" colspan="4"></td>
+<td style="text-align:right,font-weight:bold" colspan="4">Total</td>
 <td style="text-align:center,vertical-align:middle">$totalFee</td>
 </tr>
 </table>
